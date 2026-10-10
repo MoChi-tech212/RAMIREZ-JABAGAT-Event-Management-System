@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SF Evently event management system">
+  <title>SF Evently - Event Management System</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<section id="auth">
+  <div class="brand">
+    <div class="logo">🎉</div>
+    <h1>SF <span>Evently</span></h1>
+    <p>PLAN · CONNECT · MAKE IT HAPPEN</p>
+  </div>
+
+  <div class="auth-content">
+    <h2>WELCOME</h2>
+    <p class="subtitle">Sign in to manage your events.</p>
+
+    <form id="loginForm">
+      <label for="loginEmail">Email Address</label>
+      <input id="loginEmail" type="email"
+        placeholder="Enter your email" required>
+
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password"
+        placeholder="Enter your password" required>
+
+      <button class="btn primary full" type="submit">Log in →</button>
+    </form>
+
+    <p class="auth-footer">
+      Demo version: use any valid email and password.
+    </p>
+    <p class="auth-footer">
+      This demo does not provide secure account authentication.
+    </p>
+  </div>
+</section>
+
+<section id="app" class="hidden">
+  <header class="topbar">
+    <div class="mini-brand">🎉 SF Evently</div>
+    <div>
+      <span class="user-circle" id="userInitial">S</span>
+      <button id="logoutBtn" type="button">Log out</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page" id="dashboardPage">
+      <div class="page-heading">
+        <div>
+          <h2>Welcome, <span id="dashboardName">SFYO</span>!</h2>
+          <p>Here is your event management overview.</p>
+        </div>
+      </div>
+
+      <h3 class="section-title">Overview</h3>
+      <div class="stats">
+        <div class="stat">
+          <span>Upcoming Events</span>
+          <strong id="eventCount">0</strong>
+          <small>Scheduled</small>
+        </div>
+        <div class="stat">
+          <span>Participants</span>
+          <strong id="participantCount">0</strong>
+          <small>Registered</small>
+        </div>
+        <div class="stat">
+          <span>Venues</span>
+          <strong id="venueCount">0</strong>
+          <small>Unique venues</small>
+        </div>
+      </div>
+
+      <h3 class="section-title">Quick Actions</h3>
+      <div class="actions">
+        <button class="btn primary" data-go="createPage">+ Create Event</button>
+        <button class="btn secondary" data-go="participantsPage">Participants</button>
+      </div>
+
+      <div class="section-heading">
+        <h3>Upcoming Events</h3>
+        <a href="#events" data-go="eventsPage">View all</a>
+      </div>
+      <div id="dashboardEvents" class="event-list"></div>
+    </section>
+
+    <section class="page hidden" id="eventsPage">
+      <div class="page-heading">
+        <div>
+          <h2>Manage Events</h2>
+          <p>Create, search, and delete events.</p>
+        </div>
+        <button class="btn primary" data-go="createPage">+ New Event</button>
+      </div>
+
+      <input id="eventSearch" type="search"
+        placeholder="Search events..." aria-label="Search events">
+
+      <h3 class="section-title">All Events</h3>
+      <div id="allEvents" class="event-list"></div>
+    </section>
+
+    <section class="page hidden" id="createPage">
+      <div class="page-heading">
+        <div>
+          <h2>Create Event</h2>
+          <p>Enter the details of your activity.</p>
+        </div>
+      </div>
+
+      <form id="eventForm" class="form-card">
+        <label for="eventName">Event Name</label>
+        <input id="eventName" required
+          placeholder="e.g. Youth Leadership Workshop">
+
+        <label for="eventDate">Date</label>
+        <input id="eventDate" type="date" required>
+
+        <label for="eventTime">Time</label>
+        <input id="eventTime" type="time" required>
+
+        <label for="eventVenue">Venue</label>
+        <input id="eventVenue" required placeholder="Community Hall">
+
+        <label for="eventCapacity">Capacity</label>
+        <input id="eventCapacity" type="number" min="1"
+          step="1" required placeholder="150 participants">
+
+        <label>Event Category</label>
+        <div class="category-options" id="categoryOptions">
+          <button type="button" class="selected" data-category="Workshop">Workshop</button>
+          <button type="button" data-category="Party">Party</button>
+          <button type="button" data-category="Meeting">Meeting</button>
+          <button type="button" data-category="Seminar">Seminar</button>
+          <button type="button" data-category="Sports">Sports</button>
+        </div>
+
+        <label for="eventDescription">Description</label>
+        <textarea id="eventDescription" rows="4"
+          placeholder="Write a short description..."></textarea>
+
+        <button type="submit" class="btn primary full">Save Event</button>
+        <button type="button" class="btn secondary full"
+          data-go="eventsPage">Cancel</button>
+      </form>
+    </section>
+
+    <section class="page hidden" id="participantsPage">
+      <div class="page-heading">
+        <div>
+          <h2>Participants</h2>
+          <p>Register attendees and manage registrations.</p>
+        </div>
+      </div>
+
+      <form id="participantForm" class="form-card">
+        <h3>Register Participant</h3>
+
+        <label for="participantName">Full Name</label>
+        <input id="participantName" required placeholder="Enter full name">
+
+        <label for="participantEmail">Email Address</label>
+        <input id="participantEmail" type="email" required
+          placeholder="Enter email address">
+
+        <label for="participantEvent">Select Event</label>
+        <select id="participantEvent" required>
+          <option value="">Choose an event</option>
+        </select>
+
+        <button class="btn primary full" type="submit">
+          Register Participant
+        </button>
+      </form>
+
+      <h3 class="section-title">Registered Participants</h3>
+      <input id="participantSearch" type="search"
+        placeholder="Search participants..." aria-label="Search participants">
+      <div id="participantList" class="event-list"></div>
+    </section>
+
+    <section class="page hidden" id="profilePage">
+      <div class="page-heading">
+        <div>
+          <h2>Profile</h2>
+          <p>View your current demo account details.</p>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="profile-avatar" id="profileAvatar">S</div>
+
+        <label for="profileName">Display Name</label>
+        <input id="profileName" placeholder="Your display name">
+
+        <label for="profileEmail">Email Address</label>
+        <input id="profileEmail" type="email" readonly>
+
+        <button class="btn primary full" id="saveProfileBtn" type="button">
+          Save Display Name
+        </button>
+        <button class="btn secondary full" id="profileLogoutBtn" type="button">
+          Log out
+        </button>
+      </div>
+
+      <p class="subtitle">
+        Profile details are saved in this browser only. This is a demonstration
+        and does not use a secure user account system.
+      </p>
+    </section>
+
+    <section class="page hidden" id="successPage">
+      <div class="coming-soon">
+        <div class="icon">✅</div>
+        <h2 id="successTitle">Success!</h2>
+        <p id="successMessage"></p>
+        <button class="btn primary full" data-go="dashboardPage">
+          Back to Dashboard
+        </button>
+        <button class="btn secondary full" data-go="eventsPage">
+          View All Events
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <button class="nav-item active" data-go="dashboardPage">
+      <span>⌂</span><small>Home</small>
+    </button>
+    <button class="nav-item" data-go="eventsPage">
+      <span>▦</span><small>Events</small>
+    </button>
+    <button class="nav-item" data-go="participantsPage">
+      <span>♙</span><small>People</small>
+    </button>
+    <button class="nav-item" data-go="profilePage">
+      <span>⚙</span><small>Profile</small>
+    </button>
+  </nav>
+</section>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+</body>
+</html>
